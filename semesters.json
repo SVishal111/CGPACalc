@@ -1,0 +1,32 @@
+{
+  "Semester-1": [
+    { "name": "Python with Lab", "credit": 5 },
+    { "name": "Programming in C", "credit": 4 },
+    { "name": "Practical: C Programming", "credit": 3 },
+    { "name": "Statistics for Computing", "credit": 4 }
+  ],
+  "Semester-2": [
+    { "name": "Computer Organization and Architecture", "credit": 3 },
+    { "name": "DSA", "credit": 5 },
+    { "name": "Business Analytics", "credit": 4 },
+    { "name": "Mathematics for Computing", "credit": 4 }
+  ],
+  "Semester-3": [
+    { "name": "OOPS", "credit": 5 },
+    { "name": "Computer Graphics", "credit": 4 },
+    { "name": "Cloud Computing", "credit": 3 },
+    { "name": "Software Engineering", "credit": 4 },
+    { "name": "Operations Research", "credit": 4 },
+    { "name": "Business Intelligence", "credit": 4 },
+    { "name": "Open Elective Subject", "credit": 3 }
+  ],
+  "Semester-4": [
+    { "name": "RDBMS", "credit": 5 },
+    { "name": "Computer Networks", "credit": 4 },
+    { "name": "Unified Modeling Language", "credit": 3 },
+    { "name": "Blockchain Technology", "credit": 3 },
+    { "name": "Information Security", "credit": 3 },
+    { "name": "Predictive Modeling", "credit": 4 },
+    { "name": "Business Accounting", "credit": 4 }
+  ]
+}

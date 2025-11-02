@@ -1,40 +1,16 @@
 const adminPassword = "admin123";
 
-let semesters = JSON.parse(localStorage.getItem("semesters")) || {
-  "Semester-1": [
-    { name: "Python with Lab", credit: 5 },
-    { name: "Programming in C", credit: 4 },
-    { name: "Practical: C Programming", credit: 3 },
-    { name: "Statistics for Computing", credit: 4 }
-  ],
-  "Semester-2": [
-    { name: "Computer Organization and Architecture", credit: 3 },
-    { name: "DSA", credit: 5 },
-    { name: "Business Analytics", credit: 4 },
-    { name: "Mathematics for Computing", credit: 4 }
-  ],
-  "Semester-3": [
-    { name: "OOPS", credit: 5 },
-    { name: "Computer Graphics", credit: 4 },
-    { name: "Cloud Computing", credit: 3 },
-    { name: "Software Engineering", credit: 4 },
-    { name: "Operations Research", credit: 4 },
-    { name: "Business Intelligence", credit: 4 },
-    { name: "Open Elective Subject", credit: 3 }
-  ],
-  "Semester-4": [
-    { name: "RDBMS", credit: 5 },
-    { name: "Computer Networks", credit: 4 },
-    { name: "Unified Modeling Language", credit: 3 },
-    { name: "Blockchain Technology", credit: 3 },
-    { name: "Information Security", credit: 3 },
-    { name: "Predictive Modeling", credit: 4 },
-    { name: "Business Accounting", credit: 4 }
-  ]
-};
+let semesters = {};
 
-function saveSemesters() {
-  localStorage.setItem("semesters", JSON.stringify(semesters));
+async function loadSemesters() {
+  try {
+    const response = await fetch("semesters.json", { cache: "no-store" });
+    if (!response.ok) throw new Error("Failed to fetch data from semesters.json");
+    semesters = await response.json();
+  } catch (err) {
+    console.error("Error in loading semesters.json:", err);
+    showAlert("Failed to load semester data. Please refresh the page or try again later.");
+  }
 }
 
 let selectedSemesters = JSON.parse(localStorage.getItem("selectedSemesters")) || [];
@@ -171,9 +147,6 @@ function renderAllSemesters() {
   selectedSemesters.forEach(renderSemesterBlock);
 }
 
-if (semesterContainer)
-  document.addEventListener("DOMContentLoaded", renderAllSemesters);
-
 // ======================== MAIN CALCULATION========================
 function calculateCGPA() {
   let totalCredits = 0, totalWeighted = 0;
@@ -307,7 +280,7 @@ function renderAdminSubjects() {
           updated.push({ name: nameVal, credit: creditVal });
         }
         semesters[sem] = updated;
-        saveSemesters();
+        // saveSemesters();
         save.remove();
         cancel.remove();
         modify.style.display = "";
@@ -326,9 +299,6 @@ function renderAdminSubjects() {
   });
 }
 
-if (adminSubjectsContainer)
-  document.addEventListener("DOMContentLoaded", renderAdminSubjects);
-
 const exitBtn = document.getElementById("exitBtn");
 if (exitBtn) {
   exitBtn.addEventListener("click", () => {
@@ -336,3 +306,42 @@ if (exitBtn) {
     window.location.href = "index.html";
   });
 }
+
+document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    const addBtn = document.getElementById("addSemesterDropdown");
+    if (addBtn) {
+      addBtn.textContent = "Loading...";
+      addBtn.disabled = true;
+    }
+
+    await loadSemesters();
+
+    const semesterList = document.getElementById("semesterList");
+    if (semesterList) {
+      semesterList.innerHTML = "";
+      Object.keys(semesters).forEach(sem => {
+        const li = document.createElement("li");
+        const btn = document.createElement("button");
+        btn.className = "dropdown-item";
+        btn.textContent = sem;
+        btn.onclick = () => addSemester(sem);
+        li.appendChild(btn);
+        semesterList.appendChild(li);
+      });
+    }
+
+    if (addBtn) {
+      addBtn.textContent = "Add Semester";
+      addBtn.disabled = false;
+    }
+
+    renderAllSemesters?.();
+    renderAdminSubjects?.();
+
+  } catch (err) {
+    console.error("Error initializing Website:", err);
+    showAlert("Something went wrong while loading semester data.");
+  }
+});
+
