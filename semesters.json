@@ -28,5 +28,14 @@
     { "name": "Information Security", "credit": 3 },
     { "name": "Predictive Modeling", "credit": 4 },
     { "name": "Business Accounting", "credit": 4 }
+  ],
+  "Semester-5": [
+    { "name": "Operating System", "credit": 4 },
+    { "name": "Operating System Lab", "credit": 3 },
+    { "name": "Data Mining", "credit": 3 },
+    { "name": "Software Project Management", "credit": 3 },
+    { "name": "IoT and its Applications", "credit": 3 },
+    { "name": "AI Analyst Lab", "credit": 4 },
+    { "name": "OE Subject", "credit": 3 }
   ]
 }
